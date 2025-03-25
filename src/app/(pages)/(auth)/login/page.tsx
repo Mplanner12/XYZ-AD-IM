@@ -194,9 +194,6 @@ export default function LogIn() {
                 </form>
               </div>
             </div>
-            {/* <h3 className="md:w-[293px] w-full leading-[24px] text-base font-normal text-wrap text-[#d0d0d0]">
-            © 2024 XYZ. All rights reserved.
-          </h3> */}
           </div>
           <div className="h-auto bg-foundation-purple-purple-400 rounded-none rounded-tr-xl rounded-r-xl sm:px-0 px-4 w-full flex justify-center items-center pb-5">
             <Image

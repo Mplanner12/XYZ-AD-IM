@@ -9,8 +9,7 @@ export default function MainForm() {
     {
       id: "1",
       name: "General Information",
-      // component: GeneralInformation,
-      component: AccountModule,
+      component: GeneralInformation,
     },
     {
       id: "2",
