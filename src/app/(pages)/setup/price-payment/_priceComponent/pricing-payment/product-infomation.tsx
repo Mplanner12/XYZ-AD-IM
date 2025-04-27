@@ -18,7 +18,7 @@ import DatePicker from "react-datepicker";
 import Image from "next/image";
 import SubmitButton from "@/components/Buttons/SubmitButton";
 import { debounce } from "lodash";
-import { useGetAccountingListById } from "@/app/accounting/hooks/query";
+import { useGetAccountingListById } from "@/app/(pages)/accounting/hooks/query";
 import { useCreateSubscription } from "@/hooks/mutate";
 import { decodeToken } from "@/api";
 import { toast } from "react-toastify";

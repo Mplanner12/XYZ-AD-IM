@@ -18,7 +18,10 @@ import Image from "next/image";
 import { Button } from "@/components/reusable/Button";
 import { Modal } from "@/components/reusable/Modal";
 import LoadingOverlay from "@/components/reusable/LoadingOverlay";
-import { useGetAccountingListItemById, useGetDefaultChartOfAccount } from "@/app/accounting/hooks/query";
+import {
+  useGetAccountingListItemById,
+  useGetDefaultChartOfAccount,
+} from "@/app/(pages)/accounting/hooks/query";
 
 export type Deposit = {
   id: string;
@@ -42,7 +45,7 @@ interface MakeDepositTableProps {
   onDataUpdate: (data: Deposit[]) => void;
   customerList: [];
   paymentMethodList: [];
-  currency:string;
+  currency: string;
   allLists: [];
 }
 
@@ -50,7 +53,7 @@ const initialData: Deposit[] = [
   {
     id: "1",
     receivedFrom: "Select List",
-    name: 'Select Name',
+    name: "Select Name",
     fromAccount: "Select Account",
     description: "",
     checkNo: "",
@@ -123,15 +126,15 @@ const SelectCell = <TData extends object, TValue>({
     >
       <option value="">Select</option>
       {options?.map((item: any) => {
-        const nameKey = Object.keys(item).find(key => key.endsWith("_name"));
-        return(
+        const nameKey = Object.keys(item).find((key) => key.endsWith("_name"));
+        return (
           <option
-          key={nameKey ? item[nameKey] : null}
-          value={nameKey ? item[nameKey] : null}
-        >
-          {nameKey ? item[nameKey] : null}
-        </option>
-        )
+            key={nameKey ? item[nameKey] : null}
+            value={nameKey ? item[nameKey] : null}
+          >
+            {nameKey ? item[nameKey] : null}
+          </option>
+        );
       })}
     </select>
   );
@@ -161,14 +164,11 @@ const SelectDropDown = <TData extends object, TValue>({
       <option value="">Select</option>
       {options?.map((item: any) => {
         // const nameKey = Object.keys(item).find(key => key.endsWith("_name"));
-        return(
-          <option
-          key={item?.ID}
-          value={item?.ID}
-        >
-          {item?.name}
-        </option>
-        )
+        return (
+          <option key={item?.ID} value={item?.ID}>
+            {item?.name}
+          </option>
+        );
       })}
     </select>
   );
@@ -190,33 +190,33 @@ const ListCell = <TData extends object>({
   table,
 }: ListCellProps<TData>) => {
   const accountListId = row.original.accountListId;
-  const { data: subListItem } = useGetAccountingListItemById({ 
-    id: accountListId || '',
+  const { data: subListItem } = useGetAccountingListItemById({
+    id: accountListId || "",
   });
 
   const value = getValue();
-  
+
   const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    (table.options.meta as TableMeta).updateData(row.index, column.id, e.target.value);
+    (table.options.meta as TableMeta).updateData(
+      row.index,
+      column.id,
+      e.target.value
+    );
   };
 
   return (
-    <select
-      value={value}
-      onChange={handleChange}
-      className="outline-none"
-    >
+    <select value={value} onChange={handleChange} className="outline-none">
       <option value="">Select List</option>
       {subListItem?.data?.map((item: any) => {
-        const nameKey = Object.keys(item).find(key => key.endsWith("_name"));
-        return(
+        const nameKey = Object.keys(item).find((key) => key.endsWith("_name"));
+        return (
           <option
-          key={nameKey ? item[nameKey] : null}
-          value={nameKey ? item[nameKey] : null}
-        >
-          {nameKey ? item[nameKey] : null}
-        </option>
-        )
+            key={nameKey ? item[nameKey] : null}
+            value={nameKey ? item[nameKey] : null}
+          >
+            {nameKey ? item[nameKey] : null}
+          </option>
+        );
       })}
     </select>
   );
@@ -228,39 +228,38 @@ const NameCell = <TData extends object>({
   column,
   table,
 }: ListCellProps<TData>) => {
-  const receivedFrom = row.original.receivedFrom ;
-  const { data: subListItem } = useGetAccountingListItemById({ 
-    id: receivedFrom !== 'Select List' ? receivedFrom : '' ,
+  const receivedFrom = row.original.receivedFrom;
+  const { data: subListItem } = useGetAccountingListItemById({
+    id: receivedFrom !== "Select List" ? receivedFrom : "",
   });
 
   const value = getValue();
-  
+
   const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    (table.options.meta as TableMeta).updateData(row.index, column.id, e.target.value);
+    (table.options.meta as TableMeta).updateData(
+      row.index,
+      column.id,
+      e.target.value
+    );
   };
 
   return (
-    <select
-      value={value}
-      onChange={handleChange}
-      className="outline-none"
-    >
+    <select value={value} onChange={handleChange} className="outline-none">
       <option value="">Select List</option>
       {subListItem?.data?.map((item: any) => {
-        const nameKey = Object.keys(item).find(key => key.endsWith("_name"));
-        return(
+        const nameKey = Object.keys(item).find((key) => key.endsWith("_name"));
+        return (
           <option
-          key={nameKey ? item[nameKey] : null}
-          value={nameKey ? item[nameKey] : null}
-        >
-          {nameKey ? item[nameKey] : null}
-        </option>
-        )
+            key={nameKey ? item[nameKey] : null}
+            value={nameKey ? item[nameKey] : null}
+          >
+            {nameKey ? item[nameKey] : null}
+          </option>
+        );
       })}
     </select>
   );
 };
-
 
 interface FromAccountCellProps<TData extends object> {
   row: any;
@@ -285,7 +284,8 @@ const FromAccountCell = <TData extends object>({
     [parentType: string]: { [type: string]: any[] };
   }>({});
   // API CALL
-  const { data: chartOfAccount, isLoading: isFetching } = useGetDefaultChartOfAccount();
+  const { data: chartOfAccount, isLoading: isFetching } =
+    useGetDefaultChartOfAccount();
   const accounts = chartOfAccount?.data || [];
   // Group accounts by parent_type and type
   useEffect(() => {
@@ -310,8 +310,16 @@ const FromAccountCell = <TData extends object>({
   const handleOptionClick = (accountName: string, accountListId: string) => {
     setSelectedValue(accountName);
     // Update both fromAccount and accountListId in the row data
-    (table.options.meta as TableMeta).updateData(row.index, column.id, accountName);
-    (table.options.meta as TableMeta).updateData(row.index, 'accountListId', accountListId);
+    (table.options.meta as TableMeta).updateData(
+      row.index,
+      column.id,
+      accountName
+    );
+    (table.options.meta as TableMeta).updateData(
+      row.index,
+      "accountListId",
+      accountListId
+    );
     toggleModal();
   };
 
@@ -331,8 +339,7 @@ const FromAccountCell = <TData extends object>({
         </button>
         {isOpen && (
           <Modal onClose={toggleModal}>
-            <div className="py-2">
-            </div>
+            <div className="py-2"></div>
             <h2 className="text-lg font-semibold mb-4">Select Account</h2>
             <table className="min-w-full text-left">
               <thead className="text-[16x]">
@@ -370,7 +377,10 @@ const FromAccountCell = <TData extends object>({
                               //   associatedList: [account.list_name],
                               //   list_id: account.list_id,
                               // });
-                              handleOptionClick(account?.name, account?.list_id) // Pass both name and list_id
+                              handleOptionClick(
+                                account?.name,
+                                account?.list_id
+                              ); // Pass both name and list_id
                             }}
                             className="cursor-pointer hover:bg-[#f7f7f7] text-[#939292] text-[14px]"
                           >
@@ -460,7 +470,6 @@ const MakeDepositTable: React.FC<MakeDepositTableProps> = ({
   const [data, setData] = useState<Deposit[]>(() => [...initialData]);
   const [openMenuId, setOpenMenuId] = useState<string | null>(null);
 
-
   const columnHelper = createColumnHelper<Deposit>();
 
   const columns = [
@@ -491,7 +500,7 @@ const MakeDepositTable: React.FC<MakeDepositTableProps> = ({
     columnHelper.accessor("relatedParty", {
       header: "Related Party",
       // cell: (info) => <SelectCell {...info} options={paymentMethodList} />,
-      cell: (info) => <input type= 'checkbox' />
+      cell: (info) => <input type="checkbox" />,
     }),
     columnHelper.accessor("list", {
       header: "List",
@@ -558,7 +567,7 @@ const MakeDepositTable: React.FC<MakeDepositTableProps> = ({
       id: (data.length + 1).toString(),
       receivedFrom: "Select List",
       receivedFromId: "",
-      name: 'Select Name',
+      name: "Select Name",
       fromAccount: "Select Account",
       accountListId: "", // Initialize with empty accountListId
       description: "",

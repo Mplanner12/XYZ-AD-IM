@@ -1,5 +1,5 @@
-import { useCreateGeneralJournal } from "@/app/accounting/hooks/mutate";
-import { useGetAccountingListItemById } from "@/app/accounting/hooks/query";
+import { useCreateGeneralJournal } from "@/app/(pages)/accounting/hooks/mutate";
+import { useGetAccountingListItemById } from "@/app/(pages)/accounting/hooks/query";
 import CustomCheckbox from "@/components/reusable/CustomCheckbox";
 import { useModal } from '@/util/Modals/ModalsContext';
 import { ChevronDown, ChevronDownIcon, ChevronLeftIcon, Paperclip, Plus, Save, Trash2 } from 'lucide-react';
