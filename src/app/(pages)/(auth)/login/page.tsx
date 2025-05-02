@@ -6,16 +6,10 @@ import { loginFormSchema } from "@/lib/api/definition";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Image from "next/image";
 import Link from "next/link";
-import React, { useState } from "react";
+import React from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { z } from "zod";
-import {
-  authImage,
-  facebookicon,
-  googleicon,
-  logoxyz,
-  vector102,
-} from "../../../../../public";
+import { authImage, googleicon, logoxyz } from "../../../../../public";
 import useGeolocation from "./GenerateLocation";
 import { toast } from "react-toastify";
 
@@ -30,7 +24,6 @@ export default function LogIn() {
   const {
     handleSubmit,
     register,
-    reset,
     formState: { errors },
   } = useForm<LoginData>({
     resolver: zodResolver(loginFormSchema),
@@ -50,7 +43,7 @@ export default function LogIn() {
         address: address || "",
       },
       {
-        onError(error, variables, context) {
+        onError(error) {
           if (error.message === "Network Error") {
             toast.error("Network error: check your internet connection.");
           } else {
@@ -62,24 +55,24 @@ export default function LogIn() {
   };
 
   return (
-    <section className=" bg-foundation-white-white-400 flex justify-center items-center text-gray-500 lg:p-28 h-screen">
+    <section className="bg-foundation-purple-purple-900 flex justify-center items-start lg:items-center text-gray-500 lg:p-28 h-screen relative overflow-hidden">
       {isPending && <LoadingOverlay />}
-      <div className="py-6 px-6 sm:px-16 w-full">
-        <div className="w-full flex flex-col md:flex-row justify-center items-start lg:gap-x-4 rounded-xl shadow-lg">
-          <div className="flex h-auto w-full flex-col justify-between items-start text-start px-4 py-2 md:py-0">
-            <div className="mb-2">
+      <div className="py-6 px-6 sm:px-16 w-full mt-8 xl:mt-12 lg:mt-0 relative z-10">
+        <div className="w-full flex flex-col md:flex-row justify-center items-start lg:gap-x-4 rounded-xl shadow-lg bg-foundation-black-black-500/80 backdrop-blur-md">
+          <div className="lg:max-w-[520px] flex h-auto w-full flex-col justify-between items-start text-start px-8 xl:px-16 py-2 md:py-0">
+            <div className="mb-2 xl:mb-0 flex justify-start items-center gap-x-2 lg:mt-4">
               <Link href={"/"}>
                 <Image
                   src={logoxyz}
                   alt=""
-                  className="w-[74px] h-7 object-contain"
+                  className="w-[70px] h-5 object-contain"
                 />
               </Link>
             </div>
-            <div className="flex flex-col w-full justify-center items-center text-base font-inter sm:mt-6 lg:mt-4">
-              <div className="max-w-[450px] md:w-full flex flex-col justify-start text-start items-center">
-                <h2 className="w-full font-normal text-start text-gray-700 mb-5 font-DmSans">
-                  Login to your account
+            <div className="flex flex-col w-full justify-center items-center text-base font-inter mt-7">
+              <div className="lg:max-w-[450px] md:w-full flex flex-col justify-start text-start items-center">
+                <h2 className="w-full font-normal text-start text-foundation-white-white-400 text-lg xl:text-3xl xl:my-2.5 leading-tight font-DmSans">
+                  Login using your credentials
                 </h2>
 
                 <form
@@ -88,48 +81,51 @@ export default function LogIn() {
                   onSubmit={handleSubmit(onSubmit)}
                 >
                   <div>
-                    <label htmlFor="email_address" className="block mb-2.5">
-                      <span className=" text-foundation-grey-grey-900 text-[0.9rem]">
+                    <label
+                      htmlFor="email_address"
+                      className="block mb-1.5 xl:mb-2.5"
+                    >
+                      <span className="text-foundation-grey-grey-300 text-sm xl:text-[0.9rem]">
                         Email Address
                       </span>
                       <input
                         type="email"
                         id="email_address"
                         placeholder="Enter your email address"
-                        className="px-4 py-1.5 mt-1 placeholder:text-foundation-grey-grey-700 w-full rounded-lg border-[1px] border-solid border-[#d0d0d0]"
+                        className="px-2 xl:px-4 py-0.5 lg:py-1.5 xl:py-3 mt-0.5 xl:mt-1 placeholder:text-foundation-grey-grey-700 w-full rounded-lg border-[1px] border-solid border-[#d0d0d0] bg-foundation-black-black-400 text-foundation-white-white-400 focus:border-foundation-purple-purple-400 focus:ring-2 focus:ring-foundation-purple-purple-300 transition-all duration-300"
                         {...register("email_address", {
                           required: true,
                         })}
                       />
                       {/* error handler */}
                       {errors.email_address && (
-                        <span className="error-message px-2">
+                        <span className="error-message px-2 text-red-500">
                           {errors.email_address.message}
                         </span>
                       )}
                     </label>
 
-                    <label className=" block mb-2.5">
-                      <span className=" text-foundation-grey-grey-900 text-[0.9rem]">
+                    <label className="block mb-1.5 xl:mb-2.5">
+                      <span className="text-foundation-grey-grey-300 text-sm xl:text-[0.9rem]">
                         Password
                       </span>
                       <input
                         type="password"
                         id="password"
                         placeholder="Create a password"
-                        className="px-4 py-1.5 mt-1 placeholder:text-foundation-grey-grey-700 w-full rounded-lg border-[1px] border-solid border-[#d0d0d0] active:border-foundation-purple-purple-400 focus:border-foundation-purple-purple-400 focus:border-2 "
+                        className="px-2 xl:px-4 py-0.5 lg:py-1.5 xl:py-3 mt-0.5 xl:mt-1 placeholder:text-foundation-grey-grey-700 w-full rounded-lg border-[1px] border-solid border-[#d0d0d0] bg-foundation-black-black-400 text-foundation-white-white-400 focus:border-foundation-purple-purple-400 focus:ring-2 focus:ring-foundation-purple-purple-300 transition-all duration-300"
                         {...register("password", {
                           required: true,
                         })}
                       />
                       {/* error handler */}
                       {errors.password && (
-                        <span className="error-message px-2">
+                        <span className="error-message px-2 text-red-500">
                           {errors.password.message}
                         </span>
                       )}
                     </label>
-                    <p className="text-sm text-gray-700 text-start my-1.5">
+                    <p className="text-sm text-foundation-grey-grey-300 text-start my-1.5">
                       Forgotten password
                       <Link
                         href="/resetpassword"
@@ -140,62 +136,26 @@ export default function LogIn() {
                       </Link>
                     </p>
                   </div>
-                  <NavButton styles="w-full mb-2.5 mt-1.5 bg-foundation-purple-purple-400 text-white hover:bg-foundation-purple-purple-200 active:bg-foundation-purple-purple-100 rounded-md py-1.5">
+                  <NavButton styles="w-full my-1 xl:mb-2.5 xl:mt-1.5 bg-foundation-purple-purple-400 text-white hover:bg-foundation-purple-purple-300 active:bg-foundation-purple-purple-200 rounded-md py-0.5 xl:py-1.5 transition-all duration-300">
                     {isPending ? "Logging in..." : "Login"}
                   </NavButton>
-                  <div className="flex justify-between items-center px-[0.85rem]">
-                    <p className="text-[0.9rem] text-gray-700 text-center">
-                      {`don't`} have an account{" "}
-                      <a
-                        href="/signup"
-                        className="text-foundation-purple-purple-400 hover:text-foundation-purple-purple-200"
-                      >
-                        Sign Up
-                      </a>
-                    </p>
-
-                    {/* testing path to access */}
-                    <p className="text-[0.9rem] text-gray-700 text-center my-0">
-                      direct access
-                      <Link
-                        href="/business-information"
-                        className="text-foundation-purple-purple-400 hover:text-foundation-purple-purple-200"
-                      >
-                        {" "}
-                        Setup page
-                      </Link>
-                    </p>
-                  </div>
-                  <div className="flex justify-center items-center">
-                    <div className="w-[280px] relative h-9 text-[#d0d0d0] text-base mb-2 flex justify-center items-center text-center">
+                  {/* <div className="flex justify-center mb-3 xl:mb-3.5 gap-1.5 xl:gap-2.5 text-gray-700 text-[14.5px] xl:text-[18px] mt-4 xl:mt-6">                    <button className="relative bg-foundation-purple-purple-400 text-white rounded-2xl border-2 border-transparent cursor-pointer flex items-center justify-center font-semibold py-2.5 px-6 gap-[10px] text-center align-middle transition-all duration-300 hover:bg-foundation-purple-purple-300 active:bg-foundation-purple-purple-200">
                       <Image
-                        className="absolute top-[20px] left-[0px] max-h-full w-[280px] ss:w-[260px]"
-                        alt=""
-                        src={vector102}
+                        src={googleicon}
+                        alt="Google icon"
+                        className="filter brightness-0 invert"
                       />
-                      <div className="absolute top-[0px] left-[100px] bg-white w-[120px] ss:left-[70px] flex flex-row items-center justify-center p-2.5 box-border">
-                        <div className="relative tracking-[0.01em] leading-[140%]">
-                          Or
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="flex justify-center mb-5 gap-2.5 text-gray-700 text-[18px]">
-                    <button className="bg-white hover:bg-foundation-purple-purple-400 rounded-2xl border-2 outline-none border-foundation-grey-grey-300 border-solid cursor-pointer flex items-center justify-center font-semibold py-2.5 px-6 gap-[10px] text-center align-middle">
-                      <Image src={googleicon} alt="" />
-                      Google
+                      <span className="relative z-10 glow-effect">
+                        Sign in with Google
+                      </span>
+                      <span className="absolute inset-0 w-full h-full bg-gradient-to-r from-foundation-purple-purple-300 to-foundation-purple-purple-200 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-2xl"></span>
                     </button>
-                    <button className="bg-white hover:bg-foundation-purple-purple-400 rounded-2xl border-2 outline-none border-foundation-grey-grey-300 border-solid cursor-pointer flex items-center justify-center font-semibold py-2.5 px-6 gap-[10px] text-center align-middle">
-                      <Image src={facebookicon} alt="" />
-                      Facebook
-                    </button>
-                  </div>
+                  </div> */}
                 </form>
               </div>
             </div>
           </div>
-          <div className="h-auto bg-foundation-purple-purple-400 rounded-none rounded-tr-xl rounded-r-xl sm:px-0 px-4 w-full flex justify-center items-center pb-5">
+          <div className="hidden h-auto bg-foundation-purple-purple-400 rounded-none rounded-tr-xl rounded-r-xl sm:px-0 px-4 w-full lg:flex justify-center items-center pb-5">
             <Image
               src={authImage}
               alt=""
